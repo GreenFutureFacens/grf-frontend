@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa com Pins</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <style>
+		/* Estilos para o mapa ocupar toda a tela */
+		body, html {
+            height: 100%;
+            margin: 0;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+
+        /* Estilos para os filtros sobreporem o mapa */
+        #filters {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(255, 255, 255, 0.8); /* Fundo branco semi-transparente */
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        label, select, input {
+            margin-right: 10px;
+        }
+
+        #filtrar {
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+	<!-- Filtros sobrepostos ao mapa -->
+    <div id="filters">
+        <label for="cidade">Selecione a cidade:</label>
+        <select id="cidade">
+            <option value="">Selecione...</option>
+            <option value="sao-paulo">São Paulo</option>
+            <option value="rio-de-janeiro">Rio de Janeiro</option>
+            <option value="belo-horizonte">Belo Horizonte</option>
+        </select>
+
+        <label for="data">Selecione a data:</label>
+        <!-- Input de data usando o tipo 'date' para abrir um calendário -->
+        <input type="date" id="data">
+
+        <button id="filtrar">Filtrar</button>
+    </div>
+
+    <div id="map"></div>
+    <script src="app.js"></script>
+</body>
+</html>
