@@ -1,0 +1,15 @@
+<app-navbar></app-navbar>
+<div class="container-flex">
+  <div class="row">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+
+      <form>
+        <input class="form-control" [(ngModel)]="lat" [value]="lat" [ngModelOptions]="{standalone: true}">
+        <input class="form-control" [(ngModel)]="long" [value]="long" [ngModelOptions]="{standalone: true}">
+        <button (click)="test()">Get Weather</button>
+      </form>
+
+      <div id="map" class="mapa"></div>
+    </div>
+  </div>
+</div>
