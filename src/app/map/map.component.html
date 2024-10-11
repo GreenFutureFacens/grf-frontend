@@ -1,15 +1,41 @@
-<app-navbar></app-navbar>
+<!-- <app-navbar></app-navbar> -->
 <div class="container-flex">
   <div class="row">
-    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-2">
+      
+      <!-- Adicionamos uma div envolvente para o mapa e o card -->
+      <div class="map-container">
+        <div class="card floating-card end">
+          <!-- <div class="card-body"> -->
+            <form>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-2">
+                  <label class="form-label">Local</label>
+                  <input class="form-control" type="date">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-2">
+                  <label class="form-label">Munícipio</label>
+                  <select class="form-select">
+                    <option *ngFor="let cidade of cidades" [value]="cidade.codigoCidade">{{ cidade.nomeCidade }}</option>
+                  </select>
+                </div>
+              </div>
 
-      <form>
-        <input class="form-control" [(ngModel)]="lat" [value]="lat" [ngModelOptions]="{standalone: true}">
-        <input class="form-control" [(ngModel)]="long" [value]="long" [ngModelOptions]="{standalone: true}">
-        <button (click)="test()">Get Weather</button>
-      </form>
-
-      <div id="map" class="mapa"></div>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-2">
+                  <button (click)="test()" class="btn btn-success"  style="width: 100%;">Filtrar</button>
+                </div>
+              </div>
+            </form>
+          <!-- </div> -->
+        </div>
+        
+        <!-- Mapa -->
+        <div id="map" class="mapa"></div>
+      </div>
+      
     </div>
   </div>
 </div>
