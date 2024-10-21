@@ -9,8 +9,8 @@
           <!-- <div class="card-body"> -->
             <form>
               <div class="row">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-2">
-                  <label class="form-label">Local</label>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                  <label class="form-label">Data</label>
                   <input class="form-control" type="date">
                 </div>
               </div>
@@ -24,13 +24,46 @@
               </div>
 
               <div class="row">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-2">
-                  <button (click)="test()" class="btn btn-success"  style="width: 100%;">Filtrar</button>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-4">
+                  <button (click)="test()" class="btn"  style="width: 100%;">Filtrar</button>
                 </div>
               </div>
             </form>
           <!-- </div> -->
         </div>
+
+        <div class="logo-container">
+          <div class="logo">
+            <img src="assets/logoGRF.png" alt="Logo Green Future" style="max-width: 400px; max-height: 300px;">
+          </div>
+          <div class="btn-info">
+            <button class="btn-saiba-mais">Saiba mais</button>
+          </div>
+        </div>
+
+        <div class="info-container">
+          <div class="info-item"><strong>Quantidade de focos:</strong></div>
+
+          <div class="info-item">
+            <strong>Estado:</strong>  <!-- {{ estado }} -->
+          </div>
+          
+          <div class="separator">
+            <strong>|</strong>
+          </div>
+          
+          <div class="info-item">
+            <strong>Cidade:</strong>  <!-- {{ cidade }} -->
+          </div>
+          
+          <div class="separator">
+            <strong>|</strong>
+          </div>
+          
+          <div class="info-item">
+            <strong>Imediações:</strong>  <!-- {{ imediacoes }} -->
+          </div>
+        </div>        
         
         <!-- Mapa -->
         <div id="map" class="mapa"></div>
