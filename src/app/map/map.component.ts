@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import * as L from 'leaflet';
 import { CidadeInterface } from '../../interface/CidadeInterface';
+import { ModalComponent } from '../modal/modal.component';
 @Component({
   selector: 'app-map',
   standalone: true,
@@ -11,12 +12,15 @@ import { CidadeInterface } from '../../interface/CidadeInterface';
     NavbarComponent,
     CommonModule,
     FormsModule,
+    ModalComponent
   ],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css'
 })
 export class MapComponent {
 
+  @ViewChild('modal') modal!: ModalComponent;
+  
   public map: any;
   public lat: number = -22.599;
   public long: number = -47.845;
@@ -77,6 +81,12 @@ export class MapComponent {
     this.cidades.push({nomeCidade: 'Sorocaba',codigoCidade:'000000',lat:40, long:40});
     this.cidades.push({nomeCidade: 'Sorocaba',codigoCidade:'000000',lat:40, long:40});
     this.cidades.push({nomeCidade: 'Sorocaba',codigoCidade:'000000',lat:40, long:40});
+  }
+
+  openModal() {
+    console.log('Abrindo o modal');
+    this.modal.open();
+    
   }
 
   mockData(): L.LatLngLiteral[] {

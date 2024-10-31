@@ -5,6 +5,10 @@
       
       <!-- Adicionamos uma div envolvente para o mapa e o card -->
       <div class="map-container">
+
+        <!-- Mapa -->
+        <div id="map" class="mapa"></div>
+
         <div class="card floating-card end">
           <!-- <div class="card-body"> -->
             <form>
@@ -32,15 +36,6 @@
           <!-- </div> -->
         </div>
 
-        <div class="logo-container">
-          <div class="logo">
-            <img src="assets/logoGRF.png" alt="Logo Green Future" style="max-width: 400px; max-height: 300px;">
-          </div>
-          <div class="btn-info">
-            <button class="btn-saiba-mais">Saiba mais</button>
-          </div>
-        </div>
-
         <div class="info-container">
           <div class="info-item"><strong>Quantidade de focos:</strong></div>
 
@@ -65,10 +60,16 @@
           </div>
         </div>        
         
-        <!-- Mapa -->
-        <div id="map" class="mapa"></div>
+        <div class="logo-container">
+          <div class="logo">
+            <img src="assets/logoGRF.png" alt="Logo Green Future" style="max-width: 400px; max-height: 300px;">
+          </div>
+          <div class="btn-info">
+            <button  class="btn-saiba-mais" (click)="openModal()">Saiba Mais</button>
+              <app-modal #modal></app-modal>
+          </div>
+        </div>
       </div>
-      
     </div>
   </div>
 </div>

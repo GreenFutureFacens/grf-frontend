@@ -72,18 +72,18 @@ html, body {
 }
 
 .btn:hover {
-  background-color: #166f00; /* Cor mais escura ao passar o mouse */
+  background-color: #166f00; 
 }
 
 .logo-container {
-  display: flex;           /* Organiza os itens em linha por padrão */
-  gap: 15px;               /* Espaçamento entre os itens */
-  align-items: center; /* Distribui o espaço entre os itens */
+  display: flex;           
+  gap: 15px;               
+  align-items: center; 
   padding: 0px;
   position: absolute; 
   bottom: 15px;
   left: 15px;
-  z-index: 1000; /* Garante que o logo fique acima do mapa */
+  z-index: 1000; 
 }
 
 .btn-saiba-mais {
