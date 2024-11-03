@@ -11,25 +11,31 @@
 
         <div class="card floating-card end">
           <!-- <div class="card-body"> -->
-            <form>
+            <form [formGroup]="formFilter">
               <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12">
                   <label class="form-label">Data</label>
-                  <input class="form-control" type="date">
+                  <input class="form-control" type="date" [value]="dateFilter" formControlName="date">
                 </div>
               </div>
               <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-2">
                   <label class="form-label">Munícipio</label>
-                  <select class="form-select">
-                    <option *ngFor="let cidade of cidades" [value]="cidade.codigoCidade">{{ cidade.nomeCidade }}</option>
+                  <select class="form-select" formControlName="codeCity">
+                    <option></option>
+                    <option *ngFor="let cidade of cidades" [value]="cidade.cdMunicipio">{{ cidade.nmMunicipio }}</option>
                   </select>
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-4">
-                  <button (click)="test()" class="btn"  style="width: 100%;">Filtrar</button>
+                  <button (click)="filterCityAndDate()" class="btn"  style="width: 100%;">Filtrar</button>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-4">
+                  <button (click)="clear()" class="btn"  style="width: 100%;">Filtrar</button>
                 </div>
               </div>
             </form>
@@ -72,4 +78,18 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="toast-container position-fixed top-0 end-0 p-3" *ngIf="showToast">
+  <div id="liveToast" class="toast fade show bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <!-- <img src="..." class="rounded me-2" alt="..."> -->
+      <strong class="me-auto">Erro</strong>
+      <!-- <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button> -->
+    </div>
+    <div class="toast-body">
+      Os campos do formulário são obrigatórios
+    </div>
+  </div>
+
 </div>

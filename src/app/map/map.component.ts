@@ -1,10 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
 import { NavbarComponent } from "../navbar/navbar.component";
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import * as L from 'leaflet';
 import { CidadeInterface } from '../../interface/CidadeInterface';
 import { ModalComponent } from '../modal/modal.component';
+import { CidadeService } from '../../services/cidade.service';
+import { FocosQueimadaService } from '../../services/focos-queimada.service';
+import { FocosQueimadaInterface } from '../../interface/FocosQueimadaInterface';
+import { ToastModule } from 'primeng/toast';
+import { timer } from 'rxjs';
 @Component({
   selector: 'app-map',
   standalone: true,
@@ -12,7 +17,9 @@ import { ModalComponent } from '../modal/modal.component';
     NavbarComponent,
     CommonModule,
     FormsModule,
-    ModalComponent
+    ModalComponent,
+    ReactiveFormsModule,
+    ToastModule
   ],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css'
@@ -24,18 +31,38 @@ export class MapComponent {
   public map: any;
   public lat: number = -22.599;
   public long: number = -47.845;
-  public cidades: CidadeInterface[] = [];
 
-  constructor() {}
+  public cidades: CidadeInterface[] = [];
+  public focos: FocosQueimadaInterface[] = [];
+
+  public dateFilter: Date = new Date();
+  public iconCustom = L.icon({
+    iconUrl: 'https://decisionfarm.ca/assets/images/marker-icon-2x.png', // Substitua pela URL do seu ícone
+    iconSize: [16, 16],   // Tamanho do ícone
+    iconAnchor: [16, 16], // Posição de ancoragem
+    popupAnchor: [0, -32] // Onde o popup será mostrado
+  });
+
+  public formFilter: FormGroup;
+  public showToast: boolean = false;
+
+  constructor(private city: CidadeService, private focus: FocosQueimadaService) {
+    this.formFilter = new FormGroup({
+      date: new FormControl(null,[Validators.required]),
+      codeCity: new FormControl(null,[Validators.required]),
+    });
+  }
 
   ngOnInit() {
+    // get city
+    this.getAllCity();
+
     this.map = L.map('map', {
       scrollWheelZoom: true,
       zoomControl: false
       // first key = lat 
       // second key = long
     }).setView([this.lat, this.long], 7);
-
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -45,42 +72,7 @@ export class MapComponent {
       position: 'topright'
     }).addTo(this.map);
 
-    const saoPauloCenter = [-23.5505, -46.6333];
-    const test: L.LatLngLiteral = {
-      lat: -23.5505,
-      lng: -46.6333
-    }
-
-    // Criando um ícone personalizado
-    const customIcon = L.icon({
-      iconUrl: 'https://decisionfarm.ca/assets/images/marker-icon-2x.png', // Substitua pela URL do seu ícone
-      iconSize: [16, 16],   // Tamanho do ícone
-      iconAnchor: [16, 16], // Posição de ancoragem
-      popupAnchor: [0, -32] // Onde o popup será mostrado
-    });
-
-    this.mockData().forEach((e) => {
-      // Adiciona um marcador no centro de São Paulo
-      L.marker(e,{ icon: customIcon }).addTo(this.map).bindPopup(e.lat.toString() + " " + e.lng.toString()).getIcon();
-    });
-    
-    this.popArrayCidade();
-
-  }
-
-  test() {
-    this.map.setView([this.lat, this.long], 12);
-  }
-
-  popArrayCidade() {
-    this.cidades = [];
-
-    this.cidades.push({nomeCidade: 'Sorocaba',codigoCidade:'000000',lat:40, long:40});
-    this.cidades.push({nomeCidade: 'Sorocaba',codigoCidade:'000000',lat:40, long:40});
-    this.cidades.push({nomeCidade: 'Sorocaba',codigoCidade:'000000',lat:40, long:40});
-    this.cidades.push({nomeCidade: 'Sorocaba',codigoCidade:'000000',lat:40, long:40});
-    this.cidades.push({nomeCidade: 'Sorocaba',codigoCidade:'000000',lat:40, long:40});
-    this.cidades.push({nomeCidade: 'Sorocaba',codigoCidade:'000000',lat:40, long:40});
+    this.getAllFocus();
   }
 
   openModal() {
@@ -89,30 +81,68 @@ export class MapComponent {
     
   }
 
-  mockData(): L.LatLngLiteral[] {
-    const points: L.LatLngLiteral[] = [];
-    
-    // Limites geográficos do estado de São Paulo
-    const latMin = -25.0;
-    const latMax = -19.0;
-    const lngMin = -54.0;
-    const lngMax = -44.0;
-    
-    // Função para gerar um número aleatório dentro de um intervalo
-    const getRandomInRange = (min: number, max: number): number => Math.random() * (max - min) + min;
-    
-    for (let i = 0; i < 40; i++) {
-      const randomLat = getRandomInRange(latMin, latMax);
-      const randomLng = getRandomInRange(lngMin, lngMax);
-      
-      const point: L.LatLngLiteral = {
-        lat: randomLat,
-        lng: randomLng
-      };
-      
-      points.push(point);
+  getAllCity() {
+    this.city.getAll().subscribe(
+      (data) => {
+        this.cidades = data.body || [];
+      },
+      (err) => {
+        console.log(err);
+      }
+    )
+  }
+
+  getAllFocus() {
+    this.focus.getAll().subscribe(
+      (data) => {
+        this.focos = data.body || [];
+        this.focos.forEach((p) => {
+          L.marker([p.nrLatitude,p.nrLongitude],{ icon: this.iconCustom }).addTo(this.map).bindPopup('').getIcon();
+        })
+      }
+    )
+  }
+  /*
+          "cdFoco": 2,
+        "dtFoco": "2024-09-08",
+        "nrLongitude": -47.31,
+        "nrLatitude": -23.275,
+        "cdMunicipio": "3523909"
+  */
+  getFocusByPeriodCity(start: string, end: string, code: string) {
+    this.focus.getByPeriodCity(start, end,code).subscribe(
+      (data) => {
+        this.focos = [];
+        this.focos = data.body || [];
+
+        // this.focos.forEach((p) => {
+        //   L.marker([p.nrLatitude,p.nrLongitude],{ icon: this.iconCustom }).addTo(this.map).bindPopup('').getIcon();
+        // })
+
+      }
+    )
+  }
+  
+  clear() {
+    this.getAllFocus();
+  }
+
+  filterCityAndDate() {
+    this.showToast = false;
+
+    if (this.formFilter.valid) {
+      this.getFocusByPeriodCity(
+        this.formFilter.get('date')?.value,
+        this.formFilter.get('date')?.value,
+        this.formFilter.get('codeCity')?.value,
+      );
     }
-    
-    return points;
+
+    else {
+      this.showToast = true;
+    }
+
+    // this.showToast = false;
+
   }
 }
