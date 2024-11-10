@@ -10,41 +10,43 @@
         <div id="map" class="mapa"></div>
 
         <div class="card floating-card end">
-          <!-- <div class="card-body"> -->
-            <form [formGroup]="formFilter">
-              <div class="row">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-                  <label class="form-label">Data</label>
-                  <input class="form-control" type="date" [value]="dateFilter" formControlName="date">
+          <form [formGroup]="formFilter" (ngSubmit)="filterCityAndDate()">
+            <div class="row">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                <label class="form-label">Data</label>
+                  <input class="form-control" type="date" formControlName="date">
                 </div>
               </div>
-              <div class="row">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-2">
-                  <label class="form-label">Munícipio</label>
-                  <select class="form-select" formControlName="codeCity">
-                    <option></option>
-                    <option *ngFor="let cidade of cidades" [value]="cidade.cdMunicipio">{{ cidade.nmMunicipio }}</option>
-                  </select>
-                </div>
+            
+            <div class="row">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-2">
+                <label class="form-label">Município</label>
+                <select class="form-select" formControlName="codeCity">
+                  <option value="" disabled selected>Selecione uma cidade</option>
+                  <option *ngFor="let cidade of cidades" [value]="cidade.cdMunicipio">{{ cidade.nmMunicipio }}</option>
+                </select>
               </div>
-
-              <div class="row">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-4">
-                  <button (click)="filterCityAndDate()" class="btn"  style="width: 100%;">Filtrar</button>
-                </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-4">
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Filtrar</button>
               </div>
-              <div class="row">
-                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-4">
-                  <button (click)="clear()" class="btn"  style="width: 100%;">Filtrar</button>
-                </div>
-              </div>
-            </form>
-          <!-- </div> -->
+            </div>
+          </form>
         </div>
 
         <div class="info-container">
           <div class="info-item"><strong>Quantidade de focos:</strong></div>
 
+          <div class="info-item">
+            <strong>País:</strong>  <!-- {{ pais }} -->
+          </div>
+          
+          <div class="separator">
+            <strong>|</strong>
+          </div>
+          
           <div class="info-item">
             <strong>Estado:</strong>  <!-- {{ estado }} -->
           </div>
@@ -55,14 +57,6 @@
           
           <div class="info-item">
             <strong>Cidade:</strong>  <!-- {{ cidade }} -->
-          </div>
-          
-          <div class="separator">
-            <strong>|</strong>
-          </div>
-          
-          <div class="info-item">
-            <strong>Imediações:</strong>  <!-- {{ imediacoes }} -->
           </div>
         </div>        
         
@@ -88,7 +82,7 @@
       <!-- <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button> -->
     </div>
     <div class="toast-body">
-      Os campos do formulário são obrigatórios
+      Os campos do formulário são obrigatórios.
     </div>
   </div>
 
