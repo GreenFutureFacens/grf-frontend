@@ -47,6 +47,9 @@ export class MapComponent {
   public formFilter: FormGroup;
   public showToast: boolean = false;
 
+  public quantidadeFocos: number = 0;  // Variável para armazenar a quantidade de focos visíveis
+  public quantidadeFocosFilter: number = 0;  // Variável para armazenar a quantidade de focos filtrados visíveis
+
   constructor(private city: CidadeService, private focus: FocosQueimadaService) {
     this.formFilter = new FormGroup({
       date: new FormControl(null, [Validators.required]),
@@ -58,11 +61,10 @@ export class MapComponent {
     // Carrega as cidades
     this.getAllCity();
 
-    // Inicializa o mapa com a coordenada inicial
     this.map = L.map('map', {
       scrollWheelZoom: true,
       zoomControl: false
-    }).setView([this.lat, this.long], 7);
+    }).setView([-15, -60], 4);
 
     // Carrega o tile layer do OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -99,6 +101,7 @@ export class MapComponent {
     this.focus.getAll().subscribe(
       (data) => {
         this.focos = data.body || [];
+        this.quantidadeFocos = this.focos.length; // Atualiza a quantidade de focos
         this.focos.forEach((p) => {
           L.marker([p.nrLatitude, p.nrLongitude], { icon: this.iconCustom })
             .addTo(this.map)
@@ -118,7 +121,7 @@ export class MapComponent {
       (data) => {
         console.log('Focos filtrados:', data.body); // Log para verificar a resposta da API
         this.focos = data.body || [];
-
+        this.quantidadeFocosFilter = this.focos.length; // Atualiza a quantidade de focos filtrados
         this.map.eachLayer((layer: any) => {
           if (layer instanceof L.Marker) {
             this.map.removeLayer(layer);
@@ -170,5 +173,13 @@ export class MapComponent {
     }
   }
   
+    // Método para limpar o filtro e recarregar todos os focos
+  clearFilterAndLoadAll() {
+    // Reseta os valores do formulário
+    this.formFilter.reset();   
+    this.quantidadeFocosFilter = 0; // Atualiza a quantidade de focos para 0
+    // Chama o método para recarregar todos os focos de queimada
+    this.getAllFocus();
+  }
 
 }

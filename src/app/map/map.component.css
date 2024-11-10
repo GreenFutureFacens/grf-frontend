@@ -104,10 +104,11 @@ html, body {
 }
 
 .info-container {
-  display: flex;
+  display: inline-flex;
+  flex-direction: column; /* Mantém os itens na vertical */
   position: absolute;
-  align-items: center;
-  justify-content: space-between;  /* Garante a distribuição equidistante */
+  align-items: flex-start; /* Alinha os itens à esquerda */
+  justify-content: flex-start;
   bottom: 15px;
   right: 15px;
   z-index: 1000;
@@ -118,28 +119,27 @@ html, body {
   max-width: 600px;
   margin: 15px auto;
   font-weight: 400;
-
-
 }
 
 .info-item {
-  display: flex;
-  align-items: center;            /* Alinha verticalmente o conteúdo no centro */
-  justify-content: center;        /* Garante que o conteúdo seja centralizado horizontalmente */
-  font-size: 16px;
-  justify-content: space-between;  /* Garante a distribuição equidistante */
-  padding-right: 10px;
+  display: flex; /* Usado para alinhar os elementos horizontalmente */
+  align-items: center; /* Alinha os itens verticalmente */
 }
 
-.separator {
-  margin: 10px;
-  color: #888;
-  font-size: 18px;
+.highlight {
+  display: flex; /* Usado para alinhar os elementos horizontalmente */
+  align-items: center; /* Alinha os itens verticalmente */
+  color: red;
+  font-weight: bold;
+  font-size: 16px;
 }
 
 strong {
-  align-items: center; 
-  margin-left: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  align-items: center; /* Alinha os itens verticalmente */
+
 }
 
 @media (max-width: 768px) {
