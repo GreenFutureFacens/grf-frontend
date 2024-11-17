@@ -6,5 +6,5 @@ html, body {
     width: 100%;   /* Garante que ocupe 100% da largura da tela */
     display: flex;
     overflow: hidden; /* Evita barras de rolagem na página inteira */
-    background-color: #1e9400; /* Ajuste a cor de fundo, se necessário */
+    background-color: #159656; /* Ajuste a cor de fundo, se necessário */
   }

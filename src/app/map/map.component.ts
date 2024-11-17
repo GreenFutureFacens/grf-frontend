@@ -4,12 +4,11 @@ import { CommonModule } from '@angular/common';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import * as L from 'leaflet';
 import { CidadeInterface } from '../../interface/CidadeInterface';
-import { ModalComponent } from '../modal/modal.component';
 import { CidadeService } from '../../services/cidade.service';
 import { FocosQueimadaService } from '../../services/focos-queimada.service';
 import { FocosQueimadaInterface } from '../../interface/FocosQueimadaInterface';
 import { ToastModule } from 'primeng/toast';
-import { timer } from 'rxjs';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-map',
@@ -18,16 +17,14 @@ import { timer } from 'rxjs';
     NavbarComponent,
     CommonModule,
     FormsModule,
-    ModalComponent,
     ReactiveFormsModule,
-    ToastModule
+    ToastModule,
+    RouterModule 
   ],
   templateUrl: './map.component.html',
   styleUrl: './map.component.css'
 })
 export class MapComponent {
-
-  @ViewChild('modal') modal!: ModalComponent;
 
   public map: any;
   public lat: number = -22.599;
@@ -79,11 +76,6 @@ export class MapComponent {
     this.getAllFocus();
   }
 
-  openModal() {
-    console.log('Abrindo o modal');
-    this.modal.open();
-  }
-
   // Método para carregar todas as cidades do Back End
   getAllCity() {
     this.city.getAll().subscribe(
@@ -121,7 +113,7 @@ export class MapComponent {
       (data) => {
         console.log('Focos filtrados:', data.body); // Log para verificar a resposta da API
         this.focos = data.body || [];
-        this.quantidadeFocosFilter = this.focos.length; // Atualiza a quantidade de focos filtrados
+        this.quantidadeFocos = this.focos.length; // Atualiza a quantidade de focos filtrados
         this.map.eachLayer((layer: any) => {
           if (layer instanceof L.Marker) {
             this.map.removeLayer(layer);
@@ -175,10 +167,7 @@ export class MapComponent {
   
     // Método para limpar o filtro e recarregar todos os focos
   clearFilterAndLoadAll() {
-    // Reseta os valores do formulário
     this.formFilter.reset();   
-    this.quantidadeFocosFilter = 0; // Atualiza a quantidade de focos para 0
-    // Chama o método para recarregar todos os focos de queimada
     this.getAllFocus();
   }
 

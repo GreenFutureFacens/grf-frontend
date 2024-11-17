@@ -1,0 +1,146 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  height: auto; 
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: hidden; 
+  overflow-y: hidden; 
+
+}
+  
+.image-background {
+  background-image: url('/assets/landing_page/bg_landing_full.png');
+  background-size: cover; 
+  background-position: center;
+  background-repeat: no-repeat;
+  position: absolute;
+  display: flex;
+  width: calc(100vw - 30px);
+  height: calc(100vh - 30px); 
+  border-radius: 12px; 
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  top: 15px;
+  left: 15px;
+}
+
+.upleft-container {
+  position: absolute;
+  display: flex;
+  flex-direction:row;
+  align-items: center;
+  top: 1vw;
+  left: 2vw;
+  z-index: 10;
+  width: 60vw;
+}
+  
+.img-logo {
+  max-width: 50%; 
+  margin-left: 2vw
+}
+  
+.btn-return {
+  background-color: #1e9f5e; 
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 500;
+  z-index: 1000; 
+  transition: background-color 0.3s ease;
+}
+    
+.btn-return:hover {
+  background-color: #166d42; 
+  transform: scale(1.05);
+
+}
+
+.right-container {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  width: 40vw;
+  position: absolute;
+  right: 0vw;
+  height: 100vh; 
+  top:3vw;
+}
+  
+.img-text {
+  max-width: 70%;
+}
+  
+.left-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 60vw;
+  position: relative;
+  top: 13vw; 
+}
+  
+.img-quemsomos {
+  max-width: 25%;
+}
+
+.img-integrante {
+  max-width: 48%;
+  padding-top: 2px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.img-integrante:hover {
+  transform: scale(1.05);
+}
+
+.img-orientador {
+  max-width: 27%;
+  padding-top: 2px;
+}
+  
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+  /* Estrutura de containers em telas pequenas */
+  body {
+    flex-direction: column; 
+    overflow-y: auto;
+  }
+  
+  .image-background {
+    flex-direction: column; 
+    align-items: center; 
+  }
+  
+  /* Logo */
+  .img-logo {
+    max-width: 100%;
+  }
+  
+  .right-container {
+    position: relative; 
+    width: 100vw; 
+    top: auto; 
+    padding-top: 25vw; 
+    justify-content: center;
+    align-items: center; 
+  }
+    
+  .img-text {
+    max-width:50%;
+    }
+
+  .left-container {
+    width: 80vw; 
+  }
+  
+  .img-integrante, .img-quemsomos {
+    max-width: 120px; 
+  }
+}

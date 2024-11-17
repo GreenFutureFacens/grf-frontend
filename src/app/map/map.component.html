@@ -45,23 +45,17 @@
           <div>
             <strong>Quantidade de focos:</strong>
             <div class="info-item">
-              <strong>País:</strong>
               <span [ngClass]="{ 'highlight': quantidadeFocos !== undefined && quantidadeFocos !== null }">{{ quantidadeFocos || 0 }}</span>
-            </div>
-            <div class="info-item">
-              <strong>Cidade:</strong>
-              <span [ngClass]="{ 'highlight': quantidadeFocosFilter !== undefined && quantidadeFocosFilter !== null }">{{ quantidadeFocosFilter || 0 }}</span>
             </div>
           </div>
         </div>
 
         <div class="logo-container">
           <div class="logo">
-            <img src="assets/logoGRF.png" alt="Logo Green Future" style="max-width: 400px; max-height: 300px;">
+            <img src="/assets/images/logoGRF.png" alt="Logo Green Future" style="max-width: 400px; max-height: 300px;">
           </div>
           <div class="btn-info">
-            <button  class="btn-saiba-mais" (click)="openModal()">Saiba Mais</button>
-              <app-modal #modal></app-modal>
+            <button class="btn-saiba-mais" [routerLink]="'/saiba-mais'">Saiba Mais</button>
           </div>
         </div>
       </div>
@@ -72,13 +66,10 @@
 <div class="toast-container position-fixed top-0 end-0 p-3" *ngIf="showToast">
   <div id="liveToast" class="toast fade show bg-danger" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
-      <!-- <img src="..." class="rounded me-2" alt="..."> -->
       <strong class="me-auto">Erro</strong>
-      <!-- <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button> -->
     </div>
     <div class="toast-body">
       Os campos do formulário são obrigatórios.
     </div>
   </div>
-
 </div>
